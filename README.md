@@ -85,7 +85,7 @@ Full-stack role-based web application built from the assessment brief.
 
 ```bash
 PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/accentrix_role_portal
+MONGO_URI=mongodb+srv://divyapandey822123_db_user:5GUEgFnLhlus4eTg@cluster0.8lecssg.mongodb.net/
 JWT_SECRET=DFHJGUIHNFFJgkGJGFKUHGH
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
