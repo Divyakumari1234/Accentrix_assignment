@@ -88,7 +88,7 @@ PORT=5000
 MONGO_URI=mongodb+srv://divyapandey822123_db_user:5GUEgFnLhlus4eTg@cluster0.8lecssg.mongodb.net/
 JWT_SECRET=DFHJGUIHNFFJgkGJGFKUHGH
 JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=https://accentrix-assignment-2.onrender.com
 ```
 
 3. Update `backend/.env` if needed.
