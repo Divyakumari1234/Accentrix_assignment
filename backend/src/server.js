@@ -21,9 +21,11 @@ connectDB();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const allowedOrigins = (process.env.CLIENT_URL || 'https://accentrix-assignment-2.onrender.com,http://localhost:5173')
-  .split(',')
-  .map((origin) => origin.trim());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://accentrix-assignment-2.onrender.com',
+  ...(process.env.CLIENT_URL || '').split(',')
+].map((origin) => origin.trim()).filter(Boolean);
 
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({ origin: allowedOrigins, credentials: true }));
