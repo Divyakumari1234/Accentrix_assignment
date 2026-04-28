@@ -16,19 +16,41 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 import settingsRoutes from './routes/settingsRoutes.js';
 
 dotenv.config();
-connectDB();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const allowedOrigins = [
   'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173',
   'https://accentrix-assignment-2.onrender.com',
   ...(process.env.CLIENT_URL || '').split(',')
 ].map((origin) => origin.trim()).filter(Boolean);
 
+const isAllowedOrigin = (origin) => {
+  if (!origin || allowedOrigins.includes(origin)) return true;
+
+  try {
+    const { hostname, protocol } = new URL(origin);
+    return protocol === 'https:' && hostname.endsWith('.onrender.com');
+  } catch (_error) {
+    return false;
+  }
+};
+
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(cors({
+  origin(origin, callback) {
+    if (isAllowedOrigin(origin)) {
+      callback(null, true);
+      return;
+    }
+    callback(new Error(`CORS blocked origin: ${origin}`));
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -47,4 +69,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
+await connectDB();
 app.listen(port, () => console.log(`Server running on port ${port}`));

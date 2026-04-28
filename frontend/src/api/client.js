@@ -1,7 +1,26 @@
 import axios from 'axios';
 
+const getApiBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+
+  if (typeof window !== 'undefined') {
+    const { protocol, hostname } = window.location;
+    if (hostname === 'accentrix-assignment-2.onrender.com') {
+      return 'https://accentrix-assignment-1.onrender.com/api';
+    }
+    if (hostname.endsWith('.onrender.com')) {
+      return `${protocol}//${hostname.replace('-2.', '-1.')}/api`;
+    }
+  }
+
+  return 'http://localhost:5000/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://accentrix-assignment-1.onrender.com/api'
+  baseURL: getApiBaseUrl(),
+  timeout: 20000
 });
 
 api.interceptors.request.use((config) => {

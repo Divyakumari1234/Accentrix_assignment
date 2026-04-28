@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
-    "accentrix-role-portal": "file:..",
     "axios": "^1.7.9",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
